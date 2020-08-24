@@ -139,15 +139,12 @@ int main(int argc, char **argv)
   {
     double dt = std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();
     const static double radius = 2.0;
-    Eigen::Vector3d camera_pos (radius * cos(dt/2),
-                                radius * sin(dt/2),
-                                2.0);
+    Eigen::Vector3d camera_pos (radius * cos(dt/2), radius * sin(dt/2), 2.0);
 
     auto camera_pose = lookat(camera_pos,  Eigen::Vector3d(0,0,0), Eigen::Vector3d(0,0,1));
 
     auto cloud = laser.render(camera_pose, broadcaster, cloud_pub);
     cloud.header.frame_id = camera_frame;
-    cloud_pub.publish(cloud);
   }
 
   ros::waitForShutdown();
